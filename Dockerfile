@@ -1,9 +1,9 @@
 FROM isaackuang/alpine-base:3.8.0
 
-ENV VERSION=v12.4.0 NPM_VERSION=6
+ENV VERSION=v12.8.0 NPM_VERSION=6 YARN_VERSION=latest
 
 # For base builds
-ENV CONFIG_FLAGS="--fully-static" DEL_PKGS="libstdc++" RM_DIRS=/usr/include
+# ENV CONFIG_FLAGS="--fully-static" DEL_PKGS="libstdc++" RM_DIRS=/usr/include
 
 RUN apk add --no-cache curl make gcc g++ python linux-headers binutils-gold gnupg libstdc++ && \
   for server in ipv4.pool.sks-keyservers.net keyserver.pgp.com ha.pool.sks-keyservers.net; do \
@@ -40,8 +40,6 @@ RUN apk add --no-cache curl make gcc g++ python linux-headers binutils-gold gnup
     /root/.npm /root/.node-gyp /usr/lib/node_modules/npm/man \
     /usr/lib/node_modules/npm/doc /usr/lib/node_modules/npm/html /usr/lib/node_modules/npm/scripts && \
   { rm -rf /root/.gnupg || true; }
-
-ENV YARN_VERSION 1.16.0
 
 RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
   && for key in \
